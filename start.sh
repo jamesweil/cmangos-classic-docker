@@ -5,7 +5,7 @@ echo "Starting server"
 echo "Waiting on mysql"
 while ! mysqladmin ping --silent; do
   service mysql start
-  sleep 10
+  sleep 3
 done
 
 # Creating mangos user
@@ -57,7 +57,7 @@ if [ ! -f /home/mangos/run/etc/done_first_run ]; then
   mv /home/mangos/mangos/src/mangosd/mangosd.conf.dist.in /home/mangos/run/etc/mangosd.conf
   #sed -i -e 's/127.0.0.1;3306/db;3306/g' /home/mangos/run/etc/mangosd.conf
   sed -i -e 's/DataDir = "."/DataDir = "\/home\/mangos\/run\/"/g' /home/mangos/run/etc/mangosd.conf
-  #sed -i -e 's/BindIP = \"0.0.0.0\"/BindIP = \"$pub_ip\"/g' /home/mangos/run/etc/mangosd.conf
+  sed -i -e 's/BindIP = \"0.0.0.0\"/BindIP = \"$pub_ip\"/g' /home/mangos/run/etc/mangosd.conf
   mv /home/mangos/mangos/src/realmd/realmd.conf.dist.in /home/mangos/run/etc/realmd.conf
   #sed -i -e 's/127.0.0.1;3306/db;3306/g' /home/mangos/run/etc/realmd.conf
   mv /home/mangos/mangos/src/game/AuctionHouseBot/ahbot.conf.dist.in /home/mangos/run/etc/ahbot.conf
