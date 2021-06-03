@@ -11,13 +11,14 @@ ENV MYSQL_ROOT_PASSWORD root
 RUN apt-get update
 RUN apt-get install -y build-essential gcc g++ automake git-core \
 autoconf make patch libmysql++-dev libtool mysql-server supervisor \
-libtool libssl-dev grep binutils zlibc libc6 libbz2-dev cmake subversion libboost-all-dev curl dnsutils 
+libtool libssl-dev grep binutils zlibc libc6 libbz2-dev cmake subversion \
+libboost-all-dev curl dnsutils vim net-tools 
 
-# enable ssh
-RUN apt-get install -y openssh-server nginx
+# enable ssh start
+RUN apt-get install -y openssh-server nginx python sudo bash ca-certificates iproute2
 RUN mkdir /var/run/sshd
 RUN echo 'root:Passw0rd' | chpasswd
-RUN sed -i 's/PermitRootLogin prohibit-password/PermitRootLogin yes/' /etc/ssh/sshd_config
+RUN sed -i 's/#PermitRootLogin prohibit-password/PermitRootLogin yes/' /etc/ssh/sshd_config
 # SSH login fix. Otherwise user is kicked off after login
 RUN sed 's@session\s*required\s*pam_loginuid.so@session optional pam_loginuid.so@g' -i /etc/pam.d/sshd
 ENV NOTVISIBLE "in users profile"
@@ -26,9 +27,7 @@ RUN echo "export VISIBLE=now" >> /etc/profile
 RUN cp /usr/sbin/nginx /usr/sbin/nginx_org
 EXPOSE 22
 CMD ["/usr/sbin/sshd", "-D"]
-
-# Ansible enabled image
-RUN apt-get update && apt-get install -y python sudo bash ca-certificates iproute2 && apt-get clean;
+# enable ssh end
 
 # Adding mangos user and group
 RUN groupadd mangos
