@@ -14,8 +14,8 @@ mysql -uroot -p${MYSQL_ROOT_PASSWORD} -e "GRANT ALL PRIVILEGES ON *.* TO 'mangos
 mysql -uroot -p${MYSQL_ROOT_PASSWORD} -e "flush privileges;"
 
 # Creating and Initializing mangos db
-mysql -uroot -p${MYSQL_ROOT_PASSWORD} < /home/mangos/mangos/sql/create/create_mangos_db.sql
-mysql -uroot -p${MYSQL_ROOT_PASSWORD} mangos < /home/mangos/mangos/sql/base/mangos.sql
+mysql -uroot -p${MYSQL_ROOT_PASSWORD} < /home/mangos/mangos/sql/create/db_create_mysql.sql
+mysql -uroot -p${MYSQL_ROOT_PASSWORD} classicmangos < /home/mangos/mangos/sql/base/mangos.sql
 
 # Installing classicdb
 cd /home/mangos/classicdb
@@ -30,28 +30,28 @@ if [[ $? != 0 ]]; then echo "Error Installing classicdb. Exiting.."; exit 1; fi
 echo "classicdb installed"
 
 # Filling ScriptDev2 database
-mysql -uroot -p${MYSQL_ROOT_PASSWORD} mangos < /home/mangos/mangos/sql/scriptdev2/scriptdev2.sql
+mysql -uroot -p${MYSQL_ROOT_PASSWORD} classicmangos < /home/mangos/mangos/sql/scriptdev2/scriptdev2.sql
 
 # Filling ACID to world-database
-mysql -uroot -p${MYSQL_ROOT_PASSWORD} mangos < /home/mangos/acid/acid_classic.sql
+mysql -uroot -p${MYSQL_ROOT_PASSWORD} classicmangos < /home/mangos/acid/acid_classic.sql
 
 
 # Executing first run
 if [ ! -f /home/mangos/run/etc/done_first_run ]; then
   echo "Running first run scripts"
 
-  # Creating and Initializing realmd and
-  mysql -uroot -p${MYSQL_ROOT_PASSWORD} < /home/mangos/mangos/sql/create/create_char_realmd_db.sql
-  mysql -uroot -p${MYSQL_ROOT_PASSWORD} characters < /home/mangos/mangos/sql/base/characters.sql
-  mysql -uroot -p${MYSQL_ROOT_PASSWORD} realmd < /home/mangos/mangos/sql/base/realmd.sql
+  # Creating and Initializing realmd and characters
+  #mysql -uroot -p${MYSQL_ROOT_PASSWORD} < /home/mangos/mangos/sql/create/create_char_realmd_db.sql
+  mysql -uroot -p${MYSQL_ROOT_PASSWORD} classiccharacters < /home/mangos/mangos/sql/base/characters.sql
+  mysql -uroot -p${MYSQL_ROOT_PASSWORD} classicrealmd < /home/mangos/mangos/sql/base/realmd.sql
 
   # Making server public
   pub_ip=$(dig TXT +short o-o.myaddr.l.google.com @ns1.google.com | cut -d'"' -f2)
   sed -i -e "s/IP/$pub_ip/g" /home/mangos/mangos/sql/base/set_realmlist_public.sql
-  mysql -uroot -p${MYSQL_ROOT_PASSWORD} realmd < /home/mangos/mangos/sql/base/set_realmlist_public.sql
+  mysql -uroot -p${MYSQL_ROOT_PASSWORD} classicrealmd < /home/mangos/mangos/sql/base/set_realmlist_public.sql
 
   # Creating default gm account (Username: gm PW: password1234) Please change this later.
-  mysql -uroot -p${MYSQL_ROOT_PASSWORD} realmd < /home/mangos/mangos/sql/create_gm_account.sql
+  mysql -uroot -p${MYSQL_ROOT_PASSWORD} classicrealmd < /home/mangos/mangos/sql/create_gm_account.sql
 
   # Creating conf files
   mv /home/mangos/mangos/src/mangosd/mangosd.conf.dist.in /home/mangos/run/etc/mangosd.conf
