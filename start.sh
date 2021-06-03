@@ -10,6 +10,8 @@ done
 
 # Creating mangos user
 mysql -uroot -p${MYSQL_ROOT_PASSWORD} -e "CREATE USER 'mangos'@'%' IDENTIFIED BY 'mangos';"
+mysql -uroot -p${MYSQL_ROOT_PASSWORD} -e "GRANT ALL PRIVILEGES ON *.* TO 'mangos'@'%';"
+mysql -uroot -p${MYSQL_ROOT_PASSWORD} -e "flush privileges;"
 
 # Creating and Initializing mangos db
 mysql -uroot -p${MYSQL_ROOT_PASSWORD} < /home/mangos/mangos/sql/create/create_mangos_db.sql
