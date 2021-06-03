@@ -1,7 +1,7 @@
 ############################################################
 # Dockerfile to build a Classic CMaNGOS Server
 ############################################################
-FROM kodekloud/ubuntu-ssh-enabled:latest
+FROM ubuntu:latest
 
 ARG DEBIAN_FRONTEND=noninteractive
 ENV TZ=Asia/Shanghai
@@ -11,7 +11,24 @@ ENV MYSQL_ROOT_PASSWORD root
 RUN apt-get update
 RUN apt-get install -y build-essential gcc g++ automake git-core \
 autoconf make patch libmysql++-dev libtool mysql-server supervisor \
-libtool libssl-dev grep binutils zlibc libc6 libbz2-dev cmake subversion libboost-all-dev curl dnsutils
+libtool libssl-dev grep binutils zlibc libc6 libbz2-dev cmake subversion libboost-all-dev curl dnsutils 
+
+# enable ssh
+RUN apt-get install -y openssh-server nginx
+RUN mkdir /var/run/sshd
+RUN echo 'root:Passw0rd' | chpasswd
+RUN sed -i 's/PermitRootLogin prohibit-password/PermitRootLogin yes/' /etc/ssh/sshd_config
+# SSH login fix. Otherwise user is kicked off after login
+RUN sed 's@session\s*required\s*pam_loginuid.so@session optional pam_loginuid.so@g' -i /etc/pam.d/sshd
+ENV NOTVISIBLE "in users profile"
+RUN echo "export VISIBLE=now" >> /etc/profile
+# tampered file used on labs
+RUN cp /usr/sbin/nginx /usr/sbin/nginx_org
+EXPOSE 22
+CMD ["/usr/sbin/sshd", "-D"]
+
+# Ansible enabled image
+RUN apt-get update && apt-get install -y python sudo bash ca-certificates iproute2 && apt-get clean;
 
 # Adding mangos user and group
 RUN groupadd mangos
@@ -64,7 +81,6 @@ RUN chown -R mangos:mangos /home/mangos/
 
 EXPOSE 8085
 EXPOSE 3724
-EXPOSE 22
 
 VOLUME ["/home/mangos/run/etc/"]
 
