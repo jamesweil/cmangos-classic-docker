@@ -1,7 +1,7 @@
 ############################################################
 # Dockerfile to build a Classic CMaNGOS Server
 ############################################################
-FROM ubuntu:latest
+FROM kodekloud/ubuntu-ssh-enabled:latest
 
 ARG DEBIAN_FRONTEND=noninteractive
 ENV TZ=Asia/Shanghai
@@ -64,6 +64,7 @@ RUN chown -R mangos:mangos /home/mangos/
 
 EXPOSE 8085
 EXPOSE 3724
+EXPOSE 22
 
 VOLUME ["/home/mangos/run/etc/"]
 
