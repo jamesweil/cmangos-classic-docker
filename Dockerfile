@@ -25,8 +25,6 @@ ENV NOTVISIBLE "in users profile"
 RUN echo "export VISIBLE=now" >> /etc/profile
 # tampered file used on labs
 RUN cp /usr/sbin/nginx /usr/sbin/nginx_org
-EXPOSE 22
-CMD ["/usr/sbin/sshd", "-D"]
 # enable ssh end
 
 # Adding mangos user and group
@@ -69,6 +67,7 @@ ADD set_realmlist_public.sql /home/mangos/mangos/sql/base/set_realmlist_public.s
 ADD etc/supervisor/supervisord.conf /etc/supervisor/supervisord.conf
 ADD etc/supervisor/conf.d/mangosd.conf /etc/supervisor/conf.d/mangosd.conf
 ADD etc/supervisor/conf.d/realmd.conf /etc/supervisor/conf.d/realmd.conf
+ADD etc/supervisor/conf.d/sshd.conf /etc/supervisor/conf.d/sshd.conf
 ADD create_mangos_db.sql /home/mangos/mangos/sql/create/create_mangos_db.sql
 ADD create_char_realmd_db.sql /home/mangos/mangos/sql/create/create_char_realmd_db.sql
 ADD create_gm_account.sql /home/mangos/mangos/sql/
@@ -80,6 +79,7 @@ RUN chown -R mangos:mangos /home/mangos/
 
 EXPOSE 8085
 EXPOSE 3724
+EXPOSE 22
 
 VOLUME ["/home/mangos/run/etc/"]
 
