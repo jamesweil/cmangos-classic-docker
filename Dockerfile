@@ -27,7 +27,7 @@ RUN mkdir build
 
 # Compiling
 WORKDIR /home/mangos/build
-RUN cmake cmake ../mangos -DCMAKE_INSTALL_PREFIX=\../mangos/run -DBUILD_EXTRACTORS=ON -DPCH=1 -DDEBUG=0 -DBUILD_PLAYERBOT=ON
+RUN cmake ../mangos -DCMAKE_INSTALL_PREFIX=\../mangos/run -DBUILD_EXTRACTORS=ON -DPCH=1 -DDEBUG=0 -DBUILD_PLAYERBOT=ON
 RUN make -j $(cat /proc/cpuinfo | awk '/^processor/{print $3}' | wc -l)
 RUN make install
 
