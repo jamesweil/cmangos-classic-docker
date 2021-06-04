@@ -12,7 +12,7 @@ mysql -uroot -p < mangos/sql/create/db_create_mysql.sql
 mysql -uroot -p classicmangos < mangos/sql/base/mangos.sql
 
 # Installing classicdb
-cd /home/mangos/classicdb
+cd /home/mangos/classic-db
 
 ./InstallFullDB.sh 
 
