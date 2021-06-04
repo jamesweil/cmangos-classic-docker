@@ -31,7 +31,7 @@ RUN cmake ../mangos -DCMAKE_INSTALL_PREFIX=\../mangos/run -DBUILD_EXTRACTORS=ON 
 RUN make -j $(cat /proc/cpuinfo | awk '/^processor/{print $3}' | wc -l)
 RUN make install
 
-WORKDIR /home/mangos/run/etc
+WORKDIR /home/mangos/mangos/run/etc
 RUN cp mangosd.conf.dist mangosd.conf
 RUN cp realmd.conf.dist realmd.conf
 
