@@ -2,14 +2,14 @@
 
 echo "Starting server"
 echo "Waiting on mysql"
-while ! mysqladmin ping  --silent; do
+while ! mysqladmin ping -uroot -p${MYSQL_ROOT_PASSWORD} --silent; do
   service mysql start
   sleep 10
 done
 
 # Creating and Initializing mangos db
-mysql -uroot -p < mangos/sql/create/db_create_mysql.sql
-mysql -uroot -p classicmangos < mangos/sql/base/mangos.sql
+mysql -uroot -p${MYSQL_ROOT_PASSWORD} < mangos/sql/create/db_create_mysql.sql
+mysql -uroot -p${MYSQL_ROOT_PASSWORD} classicmangos < mangos/sql/base/mangos.sql
 
 # Installing classicdb
 cd /home/mangos/classic-db
@@ -29,16 +29,16 @@ if [ ! -f /home/mangos/run/etc/done_first_run ]; then
   echo "Running first run scripts"
 
   # Creating and Initializing realmd and characters
-  mysql -uroot -p classiccharacters < mangos/sql/base/characters.sql
-  mysql -uroot -p classicrealmd < mangos/sql/base/realmd.sql
+  mysql -uroot -p${MYSQL_ROOT_PASSWORD} classiccharacters < mangos/sql/base/characters.sql
+  mysql -uroot -p${MYSQL_ROOT_PASSWORD} classicrealmd < mangos/sql/base/realmd.sql
 
   # Making server public
   pub_ip=$(dig TXT +short o-o.myaddr.l.google.com @ns1.google.com | cut -d'"' -f2)
   sed -i -e "s/IP/$pub_ip/g" /home/mangos/mangos/sql/base/set_realmlist_public.sql
-  mysql -uroot -p  classicrealmd < /home/mangos/mangos/sql/base/set_realmlist_public.sql
+  mysql -uroot -p${MYSQL_ROOT_PASSWORD}  classicrealmd < /home/mangos/mangos/sql/base/set_realmlist_public.sql
 
   # Creating default gm account (Username: gm PW: password1234) Please change this later.
-  mysql -uroot -p  classicrealmd < /home/mangos/mangos/sql/create_gm_account.sql
+  mysql -uroot -p${MYSQL_ROOT_PASSWORD}  classicrealmd < /home/mangos/mangos/sql/create_gm_account.sql
 
   # Creating conf files
   sed -i -e 's/DataDir = "."/DataDir = "\/home\/mangos\/run\/"/g' /home/mangos/run/etc/mangosd.conf
