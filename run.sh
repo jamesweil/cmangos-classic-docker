@@ -8,8 +8,8 @@ while ! mysqladmin ping -uroot -p${MYSQL_ROOT_PASSWORD} --silent; do
 done
 
 # Creating and Initializing mangos db
-mysql -uroot -p${MYSQL_ROOT_PASSWORD} < mangos/sql/create/db_create_mysql.sql
-mysql -uroot -p${MYSQL_ROOT_PASSWORD} classicmangos < mangos/sql/base/mangos.sql
+mysql -uroot -p${MYSQL_ROOT_PASSWORD} < /home/mangos/sql/create/db_create_mysql.sql
+mysql -uroot -p${MYSQL_ROOT_PASSWORD} classicmangos < /home/mangos/sql/base/mangos.sql
 
 # Installing classicdb
 cd /home/mangos/classic-db
@@ -29,8 +29,8 @@ if [ ! -f /home/mangos/run/etc/done_first_run ]; then
   echo "Running first run scripts"
 
   # Creating and Initializing realmd and characters
-  mysql -uroot -p${MYSQL_ROOT_PASSWORD} classiccharacters < mangos/sql/base/characters.sql
-  mysql -uroot -p${MYSQL_ROOT_PASSWORD} classicrealmd < mangos/sql/base/realmd.sql
+  mysql -uroot -p${MYSQL_ROOT_PASSWORD} classiccharacters < /home/mangos/sql/base/characters.sql
+  mysql -uroot -p${MYSQL_ROOT_PASSWORD} classicrealmd < /home/mangos/sql/base/realmd.sql
 
   # Making server public
   pub_ip=$(dig TXT +short o-o.myaddr.l.google.com @ns1.google.com | cut -d'"' -f2)
