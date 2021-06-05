@@ -25,7 +25,7 @@ if [[ $? != 0 ]]; then echo "Error Installing classicdb. Exiting.."; exit 1; fi
 echo "classicdb installed"
 
 # Executing first run
-if [ ! -f /home/mangos/run/etc/done_first_run ]; then
+if [ ! -f /home/mangos/mangos/run/etc/done_first_run ]; then
   echo "Running first run scripts"
 
   # Creating and Initializing realmd and characters
@@ -41,16 +41,16 @@ if [ ! -f /home/mangos/run/etc/done_first_run ]; then
   mysql -uroot -p${MYSQL_ROOT_PASSWORD}  classicrealmd < /home/mangos/mangos/sql/create_gm_account.sql
 
   # Creating conf files
-  sed -i -e 's/DataDir = "."/DataDir = "\/home\/mangos\/run\/"/g' /home/mangos/run/etc/mangosd.conf
-  sed -i -e 's/BindIP = \"0.0.0.0\"/BindIP = \"$pub_ip\"/g' /home/mangos/run/etc/mangosd.conf
+  sed -i -e 's/DataDir = "."/DataDir = "\/home\/mangos\/run\/"/g' /home/mangos/mangos/run/etc/mangosd.conf
+  sed -i -e 's/BindIP = \"0.0.0.0\"/BindIP = \"$pub_ip\"/g' /home/mangos/mangos/run/etc/mangosd.conf
 
   # creating an empty file used to check for first run
-  touch /home/mangos/run/etc/done_first_run
+  touch /home/mangos/mangos/run/etc/done_first_run
 
 fi
 
 # Adding mangos lib to LD_LIBRARY_PATH
-export LD_LIBRARY_PATH=/home/mangos/run/lib/:$LD_LIBRARY_PATH
+export LD_LIBRARY_PATH=/home/mangos/mangos/run/lib/:$LD_LIBRARY_PATH
 
 # Starting the server
 /usr/bin/supervisord
