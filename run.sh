@@ -41,13 +41,41 @@ if [ ! -f /home/mangos/mangos/run/etc/done_first_run ]; then
   mysql -uroot -p${MYSQL_ROOT_PASSWORD}  classicrealmd < /home/mangos/mangos/sql/create_gm_account.sql
 
   # Creating conf files
-  sed -i -e 's/DataDir = "."/DataDir = "\/home\/mangos\/run\/"/g' /home/mangos/mangos/run/etc/mangosd.conf
+  sed -i -e 's/DataDir = "."/DataDir = "\/home\/mangos\/mangos\/run\/"/g' /home/mangos/mangos/run/etc/mangosd.conf
   sed -i -e 's/BindIP = \"0.0.0.0\"/BindIP = \"$pub_ip\"/g' /home/mangos/mangos/run/etc/mangosd.conf
 
   # creating an empty file used to check for first run
   touch /home/mangos/mangos/run/etc/done_first_run
 
 fi
+
+# Extractor Data
+cd /home/mangos/mangos/run
+# download data
+mkdir Data
+cd Data
+curl -H "Authorization: Bearer ya29.a0AfH6SMDd3kUeNo1A29OX0NZxHvLuWErMi-V8wrSp-BxEIi9REIKoWehcbj5UmNqb9H0ZwFtYDvQqVGyiJDMih0PxswiVEPhP5f0kDyVBqWb_ck7kz7y24ogGPZT8AgEMUbGy0LUfeinruwyUtkp16Yz-YLm5" https://www.googleapis.com/drive/v3/files/1-WWuPwFiyEQHY4CiPcM29f-FxWiiHIz7?alt=media -o wmo.MPQ
+curl -H "Authorization: Bearer ya29.a0AfH6SMDd3kUeNo1A29OX0NZxHvLuWErMi-V8wrSp-BxEIi9REIKoWehcbj5UmNqb9H0ZwFtYDvQqVGyiJDMih0PxswiVEPhP5f0kDyVBqWb_ck7kz7y24ogGPZT8AgEMUbGy0LUfeinruwyUtkp16Yz-YLm5" https://www.googleapis.com/drive/v3/files/1-vHK1QABEmvpuX2xD4c31-Lc6hIpqudg?alt=media -o terrain.MPQ
+curl -H "Authorization: Bearer ya29.a0AfH6SMDd3kUeNo1A29OX0NZxHvLuWErMi-V8wrSp-BxEIi9REIKoWehcbj5UmNqb9H0ZwFtYDvQqVGyiJDMih0PxswiVEPhP5f0kDyVBqWb_ck7kz7y24ogGPZT8AgEMUbGy0LUfeinruwyUtkp16Yz-YLm5" https://www.googleapis.com/drive/v3/files/1-wHWuExOnrfzuqwY0uGG9sXjmKOo-pju?alt=media -o texture.MPQ
+curl -H "Authorization: Bearer ya29.a0AfH6SMDd3kUeNo1A29OX0NZxHvLuWErMi-V8wrSp-BxEIi9REIKoWehcbj5UmNqb9H0ZwFtYDvQqVGyiJDMih0PxswiVEPhP5f0kDyVBqWb_ck7kz7y24ogGPZT8AgEMUbGy0LUfeinruwyUtkp16Yz-YLm5" https://www.googleapis.com/drive/v3/files/1-svSlaKdU-Y_LuCiF9SduEXvCMZV8nQT?alt=media -o speech.MPQ
+curl -H "Authorization: Bearer ya29.a0AfH6SMDd3kUeNo1A29OX0NZxHvLuWErMi-V8wrSp-BxEIi9REIKoWehcbj5UmNqb9H0ZwFtYDvQqVGyiJDMih0PxswiVEPhP5f0kDyVBqWb_ck7kz7y24ogGPZT8AgEMUbGy0LUfeinruwyUtkp16Yz-YLm5" https://www.googleapis.com/drive/v3/files/1-qJD9iyLuQ1mjnC5y7C_iMFM4m0JOYV5?alt=media -o sound.MPQ
+curl -H "Authorization: Bearer ya29.a0AfH6SMDd3kUeNo1A29OX0NZxHvLuWErMi-V8wrSp-BxEIi9REIKoWehcbj5UmNqb9H0ZwFtYDvQqVGyiJDMih0PxswiVEPhP5f0kDyVBqWb_ck7kz7y24ogGPZT8AgEMUbGy0LUfeinruwyUtkp16Yz-YLm5" https://www.googleapis.com/drive/v3/files/1-WWuPwFiyEQHY4CiPcM29f-FxWiiHIz7?alt=media -o patch.MPQ
+curl -H "Authorization: Bearer ya29.a0AfH6SMDd3kUeNo1A29OX0NZxHvLuWErMi-V8wrSp-BxEIi9REIKoWehcbj5UmNqb9H0ZwFtYDvQqVGyiJDMih0PxswiVEPhP5f0kDyVBqWb_ck7kz7y24ogGPZT8AgEMUbGy0LUfeinruwyUtkp16Yz-YLm5" https://www.googleapis.com/drive/v3/files/1-jnPp1ovaiqzlZBsgwJKEvxU6ePnPE9z?alt=media -o patch-y.MPQ
+curl -H "Authorization: Bearer ya29.a0AfH6SMDd3kUeNo1A29OX0NZxHvLuWErMi-V8wrSp-BxEIi9REIKoWehcbj5UmNqb9H0ZwFtYDvQqVGyiJDMih0PxswiVEPhP5f0kDyVBqWb_ck7kz7y24ogGPZT8AgEMUbGy0LUfeinruwyUtkp16Yz-YLm5" https://www.googleapis.com/drive/v3/files/1-pjZcnvqau_KAiCreQJrxEvWcRZCzjkP?alt=media -o patch-z.MPQ
+curl -H "Authorization: Bearer ya29.a0AfH6SMDd3kUeNo1A29OX0NZxHvLuWErMi-V8wrSp-BxEIi9REIKoWehcbj5UmNqb9H0ZwFtYDvQqVGyiJDMih0PxswiVEPhP5f0kDyVBqWb_ck7kz7y24ogGPZT8AgEMUbGy0LUfeinruwyUtkp16Yz-YLm5" https://www.googleapis.com/drive/v3/files/1-fCT699TZnc9WvAJ6XdCBLCvi01Tg2kr?alt=media -o patch-2.MPQ
+curl -H "Authorization: Bearer ya29.a0AfH6SMDd3kUeNo1A29OX0NZxHvLuWErMi-V8wrSp-BxEIi9REIKoWehcbj5UmNqb9H0ZwFtYDvQqVGyiJDMih0PxswiVEPhP5f0kDyVBqWb_ck7kz7y24ogGPZT8AgEMUbGy0LUfeinruwyUtkp16Yz-YLm5" https://www.googleapis.com/drive/v3/files/1-P59q6TvmVlFftJZF03YrR3Vk_87TFYw?alt=media -o model.MPQ
+curl -H "Authorization: Bearer ya29.a0AfH6SMDd3kUeNo1A29OX0NZxHvLuWErMi-V8wrSp-BxEIi9REIKoWehcbj5UmNqb9H0ZwFtYDvQqVGyiJDMih0PxswiVEPhP5f0kDyVBqWb_ck7kz7y24ogGPZT8AgEMUbGy0LUfeinruwyUtkp16Yz-YLm5" https://www.googleapis.com/drive/v3/files/1-SM3KEV7eN36BcAhKDNUcc8Z0BTad4JO?alt=media -o misc.MPQ
+curl -H "Authorization: Bearer ya29.a0AfH6SMDd3kUeNo1A29OX0NZxHvLuWErMi-V8wrSp-BxEIi9REIKoWehcbj5UmNqb9H0ZwFtYDvQqVGyiJDMih0PxswiVEPhP5f0kDyVBqWb_ck7kz7y24ogGPZT8AgEMUbGy0LUfeinruwyUtkp16Yz-YLm5" https://www.googleapis.com/drive/v3/files/1-LNg8cAqQSDBrGGwyr4dFPaFBXuNx4Bi?alt=media -o interface.MPQ
+curl -H "Authorization: Bearer ya29.a0AfH6SMDd3kUeNo1A29OX0NZxHvLuWErMi-V8wrSp-BxEIi9REIKoWehcbj5UmNqb9H0ZwFtYDvQqVGyiJDMih0PxswiVEPhP5f0kDyVBqWb_ck7kz7y24ogGPZT8AgEMUbGy0LUfeinruwyUtkp16Yz-YLm5" https://www.googleapis.com/drive/v3/files/1-EVQ4weBqHtgxGznlTBvqJFszZlz4tYt?alt=media -o fonts.MPQ
+curl -H "Authorization: Bearer ya29.a0AfH6SMDd3kUeNo1A29OX0NZxHvLuWErMi-V8wrSp-BxEIi9REIKoWehcbj5UmNqb9H0ZwFtYDvQqVGyiJDMih0PxswiVEPhP5f0kDyVBqWb_ck7kz7y24ogGPZT8AgEMUbGy0LUfeinruwyUtkp16Yz-YLm5" https://www.googleapis.com/drive/v3/files/1-6hotCEouxGg_AvmXYUUSVLoBungo-tJ?alt=media -o base.MPQ
+curl -H "Authorization: Bearer ya29.a0AfH6SMDd3kUeNo1A29OX0NZxHvLuWErMi-V8wrSp-BxEIi9REIKoWehcbj5UmNqb9H0ZwFtYDvQqVGyiJDMih0PxswiVEPhP5f0kDyVBqWb_ck7kz7y24ogGPZT8AgEMUbGy0LUfeinruwyUtkp16Yz-YLm5" https://www.googleapis.com/drive/v3/files/1-AwoGepQp7tKIE1XQonrT3biq6z-G8z7?alt=media -o backup.MPQ
+curl -H "Authorization: Bearer ya29.a0AfH6SMDd3kUeNo1A29OX0NZxHvLuWErMi-V8wrSp-BxEIi9REIKoWehcbj5UmNqb9H0ZwFtYDvQqVGyiJDMih0PxswiVEPhP5f0kDyVBqWb_ck7kz7y24ogGPZT8AgEMUbGy0LUfeinruwyUtkp16Yz-YLm5" https://www.googleapis.com/drive/v3/files/1-G9n3A2LhRPs-gIcJVEt1PPaAgTW_jHd?alt=media -o dbc.MPQ
+# extract data
+cd /home/mangos/mangos/run
+cp ./bin/tools/* .
+sed -i s/read\ line/line=2/g ./ExtractResources.sh
+chmod +x ExtractResources.sh MoveMapGen.sh
+./ExtractResources.sh a
 
 # Adding mangos lib to LD_LIBRARY_PATH
 export LD_LIBRARY_PATH=/home/mangos/mangos/run/lib/:$LD_LIBRARY_PATH
